@@ -1,0 +1,17 @@
+
+C:\Users\astik>adb shell getprop net.bt.name
+Android
+
+C:\Users\astik>adb shell getprop ro.build.version.release
+13
+
+C:\Users\astik>adb devices
+List of devices attached
+ZD222GXK8J      device
+
+
+C:\Users\astik>adb shell getprop ro.build.version.release
+14
+
+C:\Users\astik>adb shell getprop net.bt.name
+Android

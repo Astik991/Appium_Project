@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Appium Scraper</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Enter Device and Profession Details</h1>
+        <form method="post" class="mt-4">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <!-- <button type="button" class="btn btn-primary" onclick="fetchDependencies()">Get Dependencies</button> -->
+            <button type="submit" class="btn btn-success">Start Scraping</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        async function fetchDependencies() {
+            try {
+                // Fetch Device ID
+                const response = await fetch('/get-device-id/');
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.statusText}`);
+                }
+                const result = await response.json();
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+
+                // Fetch Platform Name
+                const response1 = await fetch('/get-platform-name/');
+                if (!response1.ok) {
+                    throw new Error(`Error: ${response1.statusText}`);
+                }
+                const result1 = await response1.json();
+                if (result1.error) {
+                    throw new Error(result1.error);
+                }
+
+                // Fetch Platform Version
+                const response2 = await fetch('/get-platform-version/');
+                if (!response2.ok) {
+                    throw new Error(`Error: ${response2.statusText}`);
+                }
+                const result2 = await response2.json();
+                if (result2.error) {
+                    throw new Error(result2.error);
+                }
+
+                const deviceId = result.device_id;
+                document.querySelector('input[name="device_name"]').value = deviceId;  // Insert device ID into the input field
+                const platformName = result1.platform_name;
+                document.querySelector('input[name="platform_name"]').value = platformName;  // Insert platform name into the input field
+                const platformVersion = result2.platform_version;
+                document.querySelector('input[name="platform_version"]').value = platformVersion;  // Insert platform version into the input field
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        // Call fetchDeviceID when the page loads
+        window.onload = fetchDependencies;
+    </script>
+</body>
+</html>
