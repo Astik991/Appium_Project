@@ -1,0 +1,8 @@
+{
+    "platformName":"Android",
+    "platformVersion":"14",
+    "deviceName":"ZD222GXK8J",
+    "appPackage":"com.mygate.user",
+    "appActivity":".modules.shared.SplashActivity",
+    "noReset": true
+}
